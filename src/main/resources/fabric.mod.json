@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "dae_creep",
+  "version": "${version}",
+  "name": "Dae: Creep",
+  "description": "Dae: Creep custom creeper behavior mod for Fabric 1.21.",
+  "authors": [
+    "tux"
+  ],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.example.creep.CreepMod"
+    ],
+    "client": [
+      "com.example.creep.CreepModClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.18.2",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}

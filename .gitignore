@@ -1,0 +1,40 @@
+# Gradle / build outputs
+.gradle/
+.gradle-home/
+.gradle-user-home/
+build/
+out/
+bin/
+
+# Fabric Loom run dirs and generated runtime files
+run/
+run/**
+logs/
+crash-reports/
+hs_err_pid*.log
+replay_pid*.log
+
+# IDE / editor
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# OS noise
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temp / backups
+*.tmp
+*.swp
+*.swo
+*~
+
+# Optional local archives
+*.zip
+
+# Local scripts/tools
+/tools/
