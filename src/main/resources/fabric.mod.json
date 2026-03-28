@@ -12,10 +12,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.example.creep.CreepMod"
+      "com.dae.creep.CreepMod"
     ],
     "client": [
-      "com.example.creep.CreepModClient"
+      "com.dae.creep.CreepModClient"
     ]
   },
   "depends": {

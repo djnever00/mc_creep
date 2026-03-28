@@ -1,4 +1,4 @@
-package com.example.creep;
+package com.dae.creep;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;

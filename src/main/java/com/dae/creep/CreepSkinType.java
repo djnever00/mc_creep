@@ -1,4 +1,4 @@
-package com.example.creep;
+package com.dae.creep;
 
 public enum CreepSkinType {
     BASE("creep"),

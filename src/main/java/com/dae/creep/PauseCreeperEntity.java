@@ -1,4 +1,4 @@
-package com.example.creep;
+package com.dae.creep;
 
 import java.lang.reflect.Field;
 import java.util.EnumSet;
@@ -37,6 +37,8 @@ public class PauseCreeperEntity extends Creeper {
         SynchedEntityData.defineId(PauseCreeperEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> DATA_HAS_AGGRO =
         SynchedEntityData.defineId(PauseCreeperEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_IS_PRIMED =
+        SynchedEntityData.defineId(PauseCreeperEntity.class, EntityDataSerializers.BOOLEAN);
 
     private int nextAmbientHissTick;
     private boolean fusePrimedByTargetDamage;
@@ -71,6 +73,7 @@ public class PauseCreeperEntity extends Creeper {
         builder.define(DATA_SKIN_TYPE, CreepSkinType.BASE.ordinal());
         builder.define(DATA_SKIN_MODE, CreepSkinMode.STATIC.ordinal());
         builder.define(DATA_HAS_AGGRO, false);
+        builder.define(DATA_IS_PRIMED, false);
     }
 
     @Override
@@ -93,6 +96,7 @@ public class PauseCreeperEntity extends Creeper {
         LivingEntity target = this.getTarget();
         if (!this.level().isClientSide()) {
             this.entityData.set(DATA_HAS_AGGRO, target != null && target.isAlive());
+            this.entityData.set(DATA_IS_PRIMED, this.fusePrimedByTargetDamage && CreepBehaviorConfig.isPermitDetonate());
         }
         if (this.fusePrimedByTargetDamage && CreepBehaviorConfig.isPermitDetonate()) {
             this.setSwellDir(1);
@@ -153,6 +157,10 @@ public class PauseCreeperEntity extends Creeper {
 
     public boolean hasAggro() {
         return this.entityData.get(DATA_HAS_AGGRO);
+    }
+
+    public boolean isPrimedForDetonation() {
+        return this.entityData.get(DATA_IS_PRIMED);
     }
 
     @Override

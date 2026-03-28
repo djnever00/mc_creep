@@ -35,6 +35,7 @@ desktop.ini
 
 # Optional local archives
 *.zip
+*.webp
 
 # Local scripts/tools
 /tools/

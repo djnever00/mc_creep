@@ -1,4 +1,4 @@
-package com.example.creep;
+package com.dae.creep;
 
 import net.minecraft.client.renderer.entity.CreeperRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -42,7 +42,7 @@ public class CreepEntityRenderer extends CreeperRenderer {
             skinState.skinType = daeCreep.getSkinType();
             skinState.skinMode = daeCreep.getSkinMode();
             skinState.hasAggro = daeCreep.hasAggro();
-            skinState.isPrimed = daeCreep.getSwellDir() > 0 || state.swelling > 0.01F;
+            skinState.isPrimed = daeCreep.isPrimedForDetonation() || daeCreep.getSwellDir() > 0 || state.swelling > 0.01F;
             skinState.aggroBlend = 0.0F;
             if (daeCreep.getTarget() != null && daeCreep.getTarget().isAlive()) {
                 float distance = (float) daeCreep.distanceTo(daeCreep.getTarget());

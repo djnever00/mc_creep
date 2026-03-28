@@ -1,4 +1,4 @@
-package com.example.creep;
+package com.dae.creep;
 
 public final class CreepBehaviorConfig {
     private static final double DEFAULT_WALK_SPEED = 0.32D;

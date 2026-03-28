@@ -1,4 +1,4 @@
-package com.example.creep;
+package com.dae.creep;
 
 import com.mojang.serialization.Codec;
 

@@ -1,4 +1,4 @@
-package com.example.creep;
+package com.dae.creep;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.minecraft.server.level.ServerLevel;
