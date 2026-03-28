@@ -1,4 +1,4 @@
-# Dae: Creep
+# DAE: Creep
 
 Fabric `1.21.11` `dae_creep` mod.
 
