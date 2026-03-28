@@ -23,7 +23,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.level.Level;
 
 public class PauseCreeperEntity extends Creeper {
-    private static final int EXPLOSION_RADIUS = 4;
+    private static final int EXPLOSION_RADIUS = 5;
     private static final int HISS_MIN_INTERVAL_TICKS = 600;
     private static final int HISS_MAX_INTERVAL_TICKS = 2400;
     private static final double HISS_TRIGGER_DISTANCE_SQR = 16.0D;
@@ -35,6 +35,8 @@ public class PauseCreeperEntity extends Creeper {
         SynchedEntityData.defineId(PauseCreeperEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> DATA_SKIN_MODE =
         SynchedEntityData.defineId(PauseCreeperEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> DATA_HAS_AGGRO =
+        SynchedEntityData.defineId(PauseCreeperEntity.class, EntityDataSerializers.BOOLEAN);
 
     private int nextAmbientHissTick;
     private boolean fusePrimedByTargetDamage;
@@ -68,6 +70,7 @@ public class PauseCreeperEntity extends Creeper {
         super.defineSynchedData(builder);
         builder.define(DATA_SKIN_TYPE, CreepSkinType.BASE.ordinal());
         builder.define(DATA_SKIN_MODE, CreepSkinMode.STATIC.ordinal());
+        builder.define(DATA_HAS_AGGRO, false);
     }
 
     @Override
@@ -87,6 +90,10 @@ public class PauseCreeperEntity extends Creeper {
     @Override
     public void tick() {
         super.tick();
+        LivingEntity target = this.getTarget();
+        if (!this.level().isClientSide()) {
+            this.entityData.set(DATA_HAS_AGGRO, target != null && target.isAlive());
+        }
         if (this.fusePrimedByTargetDamage && CreepBehaviorConfig.isPermitDetonate()) {
             this.setSwellDir(1);
         } else {
@@ -142,6 +149,10 @@ public class PauseCreeperEntity extends Creeper {
 
     public void setSkinMode(CreepSkinMode mode) {
         this.entityData.set(DATA_SKIN_MODE, mode.ordinal());
+    }
+
+    public boolean hasAggro() {
+        return this.entityData.get(DATA_HAS_AGGRO);
     }
 
     @Override

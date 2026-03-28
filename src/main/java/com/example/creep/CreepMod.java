@@ -73,6 +73,10 @@ public class CreepMod implements ModInitializer {
                                     .executes(context -> getProfile(context.getSource()))
                             )
                             .then(
+                                Commands.literal("counter")
+                                    .executes(context -> getSpawnCounter(context.getSource()))
+                            )
+                            .then(
                                 Commands.literal("skin")
                                     .executes(context -> getSkin(context.getSource()))
                                     .then(Commands.literal("creep")
@@ -186,14 +190,22 @@ public class CreepMod implements ModInitializer {
     }
 
     private static int getProfile(CommandSourceStack source) {
+        int counter = CreepSpawnCounterData.get(source.getServer().overworld()).getCount();
         String profile = "Dae Creep profile:"
             + ", walk=" + String.format("%.2f", CreepBehaviorConfig.getWalkSpeed())
             + ", run=" + String.format("%.2f", CreepBehaviorConfig.getRunSpeed())
             + ", blow=" + (CreepBehaviorConfig.isPermitDetonate() ? "1" : "0")
             + ", tick=" + CreepBehaviorConfig.getFuseTicks()
+            + ", counter=" + counter
             + ", skin=" + CreepBehaviorConfig.getDefaultSkinType().id()
             + ", skin_mode=" + CreepBehaviorConfig.getDefaultSkinMode().id();
         source.sendSuccess(() -> Component.literal(profile), false);
+        return Command.SINGLE_SUCCESS;
+    }
+
+    private static int getSpawnCounter(CommandSourceStack source) {
+        int counter = CreepSpawnCounterData.get(source.getServer().overworld()).getCount();
+        source.sendSuccess(() -> Component.literal("Dae Creep spawn counter is " + counter), false);
         return Command.SINGLE_SUCCESS;
     }
 

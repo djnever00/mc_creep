@@ -41,7 +41,7 @@ public class CreepEntityRenderer extends CreeperRenderer {
         if (state instanceof CreepSkinRenderState skinState && creeper instanceof PauseCreeperEntity daeCreep) {
             skinState.skinType = daeCreep.getSkinType();
             skinState.skinMode = daeCreep.getSkinMode();
-            skinState.hasAggro = daeCreep.getTarget() != null && daeCreep.getTarget().isAlive();
+            skinState.hasAggro = daeCreep.hasAggro();
             skinState.isPrimed = daeCreep.getSwellDir() > 0 || state.swelling > 0.01F;
             skinState.aggroBlend = 0.0F;
             if (daeCreep.getTarget() != null && daeCreep.getTarget().isAlive()) {
@@ -54,6 +54,7 @@ public class CreepEntityRenderer extends CreeperRenderer {
                     float distance = (float) daeCreep.distanceTo(nearest);
                     float proximity = 1.0F - (distance / AGGRO_TINT_RANGE_BLOCKS);
                     skinState.aggroBlend = Math.clamp(proximity, 0.0F, 1.0F);
+                    skinState.hasAggro = true;
                 }
             }
         }
