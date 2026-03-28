@@ -69,6 +69,12 @@ public class CreepMod implements ModInitializer {
                                         .executes(context -> setTick(context.getSource(), IntegerArgumentType.getInteger(context, "value"))))
                             )
                             .then(
+                                Commands.literal("respawn")
+                                    .executes(context -> getRespawn(context.getSource()))
+                                    .then(Commands.argument("value", IntegerArgumentType.integer(10, 200))
+                                        .executes(context -> setRespawn(context.getSource(), IntegerArgumentType.getInteger(context, "value"))))
+                            )
+                            .then(
                                 Commands.literal("profile")
                                     .executes(context -> getProfile(context.getSource()))
                             )
@@ -189,6 +195,17 @@ public class CreepMod implements ModInitializer {
         return Command.SINGLE_SUCCESS;
     }
 
+    private static int getRespawn(CommandSourceStack source) {
+        source.sendSuccess(() -> Component.literal("Dae Creep respawn ratio is " + CreepBehaviorConfig.getRespawnRatio()), false);
+        return Command.SINGLE_SUCCESS;
+    }
+
+    private static int setRespawn(CommandSourceStack source, int value) {
+        CreepBehaviorConfig.setRespawnRatio(value);
+        source.sendSuccess(() -> Component.literal("Dae Creep respawn ratio set to " + CreepBehaviorConfig.getRespawnRatio()), true);
+        return Command.SINGLE_SUCCESS;
+    }
+
     private static int getProfile(CommandSourceStack source) {
         int counter = CreepSpawnCounterData.get(source.getServer().overworld()).getCount();
         String profile = "Dae Creep profile:"
@@ -196,6 +213,7 @@ public class CreepMod implements ModInitializer {
             + ", run=" + String.format("%.2f", CreepBehaviorConfig.getRunSpeed())
             + ", blow=" + (CreepBehaviorConfig.isPermitDetonate() ? "1" : "0")
             + ", tick=" + CreepBehaviorConfig.getFuseTicks()
+            + ", respawn=" + CreepBehaviorConfig.getRespawnRatio()
             + ", counter=" + counter
             + ", skin=" + CreepBehaviorConfig.getDefaultSkinType().id()
             + ", skin_mode=" + CreepBehaviorConfig.getDefaultSkinMode().id();

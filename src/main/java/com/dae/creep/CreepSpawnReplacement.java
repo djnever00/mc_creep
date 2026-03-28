@@ -7,8 +7,6 @@ import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 
 public final class CreepSpawnReplacement {
-    private static final int SPAWN_RATIO = 250;
-
     private CreepSpawnReplacement() {
     }
 
@@ -27,7 +25,8 @@ public final class CreepSpawnReplacement {
         }
 
         int currentCount = CreepSpawnCounterData.get(level).incrementAndGet();
-        if (currentCount % SPAWN_RATIO != 0) {
+        int spawnRatio = CreepBehaviorConfig.getRespawnRatio();
+        if (currentCount % spawnRatio != 0) {
             return;
         }
 

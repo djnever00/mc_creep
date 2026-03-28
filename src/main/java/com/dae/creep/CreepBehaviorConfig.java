@@ -4,14 +4,18 @@ public final class CreepBehaviorConfig {
     private static final double DEFAULT_WALK_SPEED = 0.32D;
     private static final double DEFAULT_RUN_SPEED = 0.36D;
     private static final int DEFAULT_FUSE_TICKS = 4;
+    private static final int DEFAULT_RESPAWN_RATIO = 100;
     private static final double MIN_SPEED = 0.05D;
     private static final double MAX_SPEED = 1.00D;
     private static final int MIN_FUSE_TICKS = 1;
     private static final int MAX_FUSE_TICKS = 200;
+    private static final int MIN_RESPAWN_RATIO = 10;
+    private static final int MAX_RESPAWN_RATIO = 200;
 
     private static double walkSpeed = DEFAULT_WALK_SPEED;
     private static double runSpeed = DEFAULT_RUN_SPEED;
     private static int fuseTicks = DEFAULT_FUSE_TICKS;
+    private static int respawnRatio = DEFAULT_RESPAWN_RATIO;
     private static boolean permitDetonate = true;
     private static CreepSkinType defaultSkinType = CreepSkinType.BASE;
     private static CreepSkinMode defaultSkinMode = CreepSkinMode.STATIC;
@@ -51,6 +55,14 @@ public final class CreepBehaviorConfig {
         permitDetonate = enabled;
     }
 
+    public static int getRespawnRatio() {
+        return respawnRatio;
+    }
+
+    public static void setRespawnRatio(int ratio) {
+        respawnRatio = clampRespawnRatio(ratio);
+    }
+
     public static CreepSkinType getDefaultSkinType() {
         return defaultSkinType;
     }
@@ -85,5 +97,15 @@ public final class CreepBehaviorConfig {
             return MAX_FUSE_TICKS;
         }
         return ticks;
+    }
+
+    private static int clampRespawnRatio(int ratio) {
+        if (ratio < MIN_RESPAWN_RATIO) {
+            return MIN_RESPAWN_RATIO;
+        }
+        if (ratio > MAX_RESPAWN_RATIO) {
+            return MAX_RESPAWN_RATIO;
+        }
+        return ratio;
     }
 }
